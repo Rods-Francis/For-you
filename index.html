@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click me</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>Click Me</title>
     <style>
         body {
             margin: 0;
@@ -13,9 +12,9 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffc0cb; 
+            background-color: #ffc0cb; /* Pink background */
             font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Prevents scrollbars when button moves */
         }
 
         .container {
@@ -24,6 +23,7 @@
             z-index: 1;
         }
 
+        /* The Main Image */
         img {
             width: 300px;
             height: auto;
@@ -54,6 +54,7 @@
             font-weight: bold;
         }
 
+        /* Yes Button Styling */
         #yes-btn {
             background-color: #4CAF50; /* Green */
             color: white;
@@ -64,13 +65,17 @@
             transform: scale(1.1);
         }
 
+        /* No Button Styling */
         #no-btn {
             background-color: #f44336; /* Red */
             color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: absolute; 
+            position: absolute; /* Allows movement */
+            /* Initial position is handled by flexbox in the HTML structure, 
+               but once clicked, JS will take over position */
         }
 
+        /* Success Message Styling */
         .hidden {
             display: none;
         }
@@ -79,8 +84,10 @@
 <body>
 
     <div class="container" id="main-container">
-        <img src="IMG_0037.jpeg" alt="Minion" id="main-img">
+        <img src="https://media.tenor.com/2UdaXy_1Zz8AAAAM/minions-love.gif" alt="Minion" id="main-img">
+        
         <h1>Will you be my valentine mahal?</h1>
+        
         <div class="buttons">
             <button id="yes-btn" onclick="acceptProposal()">Yes</button>
             <div id="no-btn-wrapper">
@@ -91,40 +98,37 @@
 
     <div class="container hidden" id="success-container">
         <img src="https://media.tenor.com/gUiu1zyxfzYAAAAM/bear-kiss-bear-kisses.gif" alt="Happy" style="width: 350px;">
-        <h1 style="font-size: 3.5rem;">YAYYY!!!, I love you ❤️</h1>
+        <h1 style="font-size: 3.5rem;">YAYYY!!! ❤️</h1>
     </div>
 
     <script>
         const noBtn = document.getElementById('no-btn');
         const yesBtn = document.getElementById('yes-btn');
-
+        const noBtnWrapper = document.getElementById('no-btn-wrapper');
+        
+        // Function to move the No button
         function moveButton() {
+            // Get the window boundaries
             const maxWidth = window.innerWidth - noBtn.offsetWidth;
             const maxHeight = window.innerHeight - noBtn.offsetHeight;
+
+            // Generate random coordinates
             const randomX = Math.floor(Math.random() * maxWidth);
             const randomY = Math.floor(Math.random() * maxHeight);
 
+            // Apply new position
+            // We switch to fixed position so it breaks out of the flex container
             noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
+        // Function when Yes is clicked
         function acceptProposal() {
-            // 1. Trigger Confetti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff0000', '#ff69b4', '#ffffff']
-            });
-
-            // 2. Hide Question, Show Love Message
             document.getElementById('main-container').classList.add('hidden');
             document.getElementById('success-container').classList.remove('hidden');
-
-            // 3. Send Formspree Notification
             
-            .catch(error => console.error('Error:', error));
+            // Optional: Add confetti effect or sound here
         }
     </script>
 </body>
