@@ -25,7 +25,7 @@
 
        
         img {
-            <img src="IMG_0037.jpeg" alt="My Valentine" id="main-img">
+            
             width: 300px;
             height: auto;
             border-radius: 15px;
@@ -83,7 +83,7 @@
 <body>
 
     <div class="container" id="main-container">
-        <img src="https://media.tenor.com/2UdaXy_1Zz8AAAAM/minions-love.gif" alt="Minion" id="main-img">
+        <img src="IMG_0037.jpeg" alt="Us" id="main-img">
         
         <h1>Will you be my valentine mahal?</h1>
         
@@ -97,7 +97,7 @@
 
     <div class="container hidden" id="success-container">
         <img src="https://media.tenor.com/gUiu1zyxfzYAAAAM/bear-kiss-bear-kisses.gif" alt="Happy" style="width: 350px;">
-        <h1 style="font-size: 3.5rem;">YAYYY!!! ❤️</h1>
+        <h1 style="font-size: 3.5rem;">YAYYY!!!, I love you ❤️</h1>
     </div>
 
     <script>
@@ -124,8 +124,29 @@
 
         // Function when Yes is clicked
         function acceptProposal() {
-            document.getElementById('main-container').classList.add('hidden');
-            document.getElementById('success-container').classList.remove('hidden');
+    // This sends the "Yes" notification to your email
+    fetch('https://formspree.io/f/mvzbkday', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            answer: "YES!",
+            message: "mahal said yes to being your Valentine!"
+        })
+    })
+    .then(response => {
+        // This part shows the success screen after the email is sent
+        document.getElementById('main-container').classList.add('hidden');
+        document.getElementById('success-container').classList.remove('hidden');
+    })
+    .catch(error => {
+        // Even if there is an error, show the success screen anyway
+        document.getElementById('main-container').classList.add('hidden');
+        document.getElementById('success-container').classList.remove('hidden');
+        console.error('Error:', error);
+    });
+}
             
             // Optional: Add confetti effect or sound here
         }
