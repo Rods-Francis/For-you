@@ -12,9 +12,22 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffc0cb; /* Pink background */
             font-family: 'Arial', sans-serif;
             overflow: hidden; /* Prevents scrollbars when button moves */
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2000');
+    
+    background-size: cover;
+    background-position: center;
+    
+    /* This controls the blur amount */
+    filter: blur(8px); 
+    
+    /* We scale it up slightly to hide the white edges caused by the blur */
+    transform: scale(1.1);
+    
+    /* Keeps it behind your text */
+    z-index: -1;
         }
 
         .container {
