@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click me</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -23,9 +24,7 @@
             z-index: 1;
         }
 
-       
         img {
-            
             width: 300px;
             height: auto;
             border-radius: 15px;
@@ -55,7 +54,6 @@
             font-weight: bold;
         }
 
-
         #yes-btn {
             background-color: #4CAF50; /* Green */
             color: white;
@@ -66,7 +64,6 @@
             transform: scale(1.1);
         }
 
-    
         #no-btn {
             background-color: #f44336; /* Red */
             color: white;
@@ -74,7 +71,6 @@
             position: absolute; 
         }
 
-        /* Success Message Styling */
         .hidden {
             display: none;
         }
@@ -84,9 +80,7 @@
 
     <div class="container" id="main-container">
         <img src="IMG_0037.jpeg" alt="Minion" id="main-img">
-        
         <h1>Will you be my valentine mahal?</h1>
-        
         <div class="buttons">
             <button id="yes-btn" onclick="acceptProposal()">Yes</button>
             <div id="no-btn-wrapper">
@@ -103,60 +97,43 @@
     <script>
         const noBtn = document.getElementById('no-btn');
         const yesBtn = document.getElementById('yes-btn');
-        const noBtnWrapper = document.getElementById('no-btn-wrapper');
-        
-        // Function to move the No button
+
         function moveButton() {
-            // Get the window boundaries
             const maxWidth = window.innerWidth - noBtn.offsetWidth;
             const maxHeight = window.innerHeight - noBtn.offsetHeight;
-
-            // Generate random coordinates
             const randomX = Math.floor(Math.random() * maxWidth);
             const randomY = Math.floor(Math.random() * maxHeight);
 
-            // Apply new position
-            // We switch to fixed position so it breaks out of the flex container
             noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
-        // Function when Yes is clicked
         function acceptProposal() {
-            function acceptProposal() {
-            // 1. Trigger Confetti immediately!
+            // 1. Trigger Confetti
             confetti({
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 },
                 colors: ['#ff0000', '#ff69b4', '#ffffff']
             });
-    // This sends the "Yes" notification to your email
-    fetch('https://formspree.io/f/mvzbkday', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            answer: "YES!",
-            message: "mahal said yes to being your Valentine!"
-        })
-    })
-    .then(response => {
-        // This part shows the success screen after the email is sent
-        document.getElementById('main-container').classList.add('hidden');
-        document.getElementById('success-container').classList.remove('hidden');
-    })
-    .catch(error => {
-        // Even if there is an error, show the success screen anyway
-        document.getElementById('main-container').classList.add('hidden');
-        document.getElementById('success-container').classList.remove('hidden');
-        console.error('Error:', error);
-    });
-}
-            
-            // Optional: Add confetti effect or sound here
+
+            // 2. Hide Question, Show Love Message
+            document.getElementById('main-container').classList.add('hidden');
+            document.getElementById('success-container').classList.remove('hidden');
+
+            // 3. Send Formspree Notification
+            fetch('https://formspree.io/f/mvzbkday', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    answer: "YES!",
+                    message: "mahal said yes to being your Valentine!"
+                })
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
