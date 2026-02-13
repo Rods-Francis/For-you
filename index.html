@@ -123,16 +123,7 @@
             document.getElementById('success-container').classList.remove('hidden');
 
             // 3. Send Formspree Notification
-            fetch('https://formspree.io/f/mvzbkday', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    answer: "YES!",
-                    message: "mahal said yes to being your Valentine!"
-                })
-            })
+            
             .catch(error => console.error('Error:', error));
         }
     </script>
