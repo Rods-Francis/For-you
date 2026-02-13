@@ -124,6 +124,14 @@
 
         // Function when Yes is clicked
         function acceptProposal() {
+            function acceptProposal() {
+            // 1. Trigger Confetti immediately!
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff0000', '#ff69b4', '#ffffff']
+            });
     // This sends the "Yes" notification to your email
     fetch('https://formspree.io/f/mvzbkday', {
         method: 'POST',
