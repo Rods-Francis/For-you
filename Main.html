@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffc0cb; /* Pink background */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Prevents scrollbars when button moves */
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* The Main Image */
+        img {
+            width: 300px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        /* Yes Button Styling */
+        #yes-btn {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        #yes-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* No Button Styling */
+        #no-btn {
+            background-color: #f44336; /* Red */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: absolute; /* Allows movement */
+            /* Initial position is handled by flexbox in the HTML structure, 
+               but once clicked, JS will take over position */
+        }
+
+        /* Success Message Styling */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <img src="https://media.tenor.com/2UdaXy_1Zz8AAAAM/minions-love.gif" alt="Minion" id="main-img">
+        
+        <h1>Will you be my valentine?</h1>
+        
+        <div class="buttons">
+            <button id="yes-btn" onclick="acceptProposal()">Yes</button>
+            <div id="no-btn-wrapper">
+                <button id="no-btn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="success-container">
+        <img src="https://media.tenor.com/gUiu1zyxfzYAAAAM/bear-kiss-bear-kisses.gif" alt="Happy" style="width: 350px;">
+        <h1 style="font-size: 3.5rem;">YAYYY!!! ❤️</h1>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtnWrapper = document.getElementById('no-btn-wrapper');
+        
+        // Function to move the No button
+        function moveButton() {
+            // Get the window boundaries
+            const maxWidth = window.innerWidth - noBtn.offsetWidth;
+            const maxHeight = window.innerHeight - noBtn.offsetHeight;
+
+            // Generate random coordinates
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            // Apply new position
+            // We switch to fixed position so it breaks out of the flex container
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Function when Yes is clicked
+        function acceptProposal() {
+            document.getElementById('main-container').classList.add('hidden');
+            document.getElementById('success-container').classList.remove('hidden');
+            
+            // Optional: Add confetti effect or sound here
+        }
+    </script>
+</body>
+</html>
